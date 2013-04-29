@@ -1,6 +1,7 @@
 {
     "name": "maba-oauth-commerce/php-lib-base",
     "description": "PHP base library for OAuth-Commerce based API",
+    "licence": "MIT",
     "minimum-stability": "dev",
     "authors": [
         {
