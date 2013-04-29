@@ -1,0 +1,28 @@
+{
+    "name": "maba-oauth-commerce/php-lib-base",
+    "description": "PHP base library for OAuth-Commerce based API",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Marius Balčytis",
+            "email": "marius.balcytis@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Maba": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "v3.4.0",
+        "phpseclib/phpseclib": "0.3.1",
+        "zendframework/zend-crypt": "2.1.4",
+        "zendframework/zend-math": "2.1.4"
+    }
+}
