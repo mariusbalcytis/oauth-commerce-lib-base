@@ -5,7 +5,7 @@ namespace Maba\OAuthCommerceClient;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Client;
 use Maba\OAuthCommerceClient\Entity\AccessToken;
-use Maba\OAuthCommerceClient\Entity\SignatureCredentials;
+use Maba\OAuthCommerceClient\Entity\SignatureCredentials\SymmetricCredentials;
 use Maba\OAuthCommerceClient\Entity\SignedCredentials\Session;
 use Maba\OAuthCommerceClient\Entity\UserCredentials\CredentialsInterface;
 use Maba\OAuthCommerceClient\Hash\Hasher;
@@ -32,12 +32,11 @@ class OAuthCommerceClient
     public function __construct($baseUrl = '', $config = null)
     {
         $default = array('credentials_algorithm' => 'hmac-sha-256', 'version' => 'v1');
-        $required = array('base_url', 'credentials_algorithm', 'credentials_id', 'credentials_key');
+        $required = array('credentials_algorithm', 'credentials_id', 'credentials_key');
         $config = Collection::fromConfig($config, $default, $required);
 
-        $this->client = new Client($baseUrl, $config);
-
-        $this->registry = Registry::create()
+        /** @var Registry $registry */
+        $registry = Registry::create()
             ->addHasher(new Hasher('sha256', 'sha-256'))
             ->addHasher(new Hasher('sha512', 'sha-512'))
             ->addSignatureAlgorithm(new HmacAlgorithm('sha256', 'hmac-sha-256'))
@@ -49,15 +48,18 @@ class OAuthCommerceClient
             ->addEncrypting(new Encrypting('rijndael-256', 'aes-256-cbc'))
         ;
 
-        $signatureCredentials = new SignatureCredentials();
+        $signatureCredentials = new SymmetricCredentials();
         $signatureCredentials
             ->setAlgorithm($config->get('credentials_algorithm'))
             ->setMacId($config->get('credentials_id'))
-            ->setMacKey($config->get('credentials_key'))
+            ->setSharedKey($config->get('credentials_key'))
         ;
-        $this->client->addSubscriber(
-            new MacSignatureProvider($signatureCredentials, new AlgorithmManager($this->registry))
-        );
+        $macSignatureProvider = new MacSignatureProvider($signatureCredentials, new AlgorithmManager($registry));
+
+        $this->registry = $registry;
+
+        $this->client = new Client($baseUrl, $config);
+        $this->client->addSubscriber($macSignatureProvider);
     }
 
     /**

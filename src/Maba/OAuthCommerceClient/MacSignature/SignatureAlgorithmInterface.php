@@ -20,7 +20,15 @@ interface SignatureAlgorithmInterface
      * @param string               $text
      * @param SignatureCredentials $credentials
      *
+     * @throws \InvalidArgumentException
      * @return string
      */
     public function sign($text, SignatureCredentials $credentials);
+
+    /**
+     * @param array $data
+     *
+     * @return SignatureCredentials
+     */
+    public function createSignatureCredentials(array $data);
 }

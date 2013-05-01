@@ -3,6 +3,7 @@
 namespace Maba\OAuthCommerceClient\MacSignature;
 
 use Maba\OAuthCommerceClient\Entity\SignatureCredentials;
+use Maba\OAuthCommerceClient\Entity\SignatureCredentials\AsymmetricCredentials;
 
 class RsaAlgorithm implements SignatureAlgorithmInterface
 {
@@ -55,14 +56,33 @@ class RsaAlgorithm implements SignatureAlgorithmInterface
      * @param string               $text
      * @param SignatureCredentials $credentials
      *
+     * @throws \InvalidArgumentException
      * @return string
      */
     public function sign($text, SignatureCredentials $credentials)
     {
-        $privateKey = openssl_pkey_get_private($credentials->getMacKey());
+        if (!$credentials instanceof AsymmetricCredentials) {
+            throw new \InvalidArgumentException('RsaAlgorithms works with asymmetric credentials');
+        }
+        $privateKey = openssl_pkey_get_private($credentials->getPrivateKey());
         openssl_sign($text, $signature, $privateKey, $this->getHashAlgorithm());
         openssl_free_key($privateKey);
         return base64_encode($signature);
     }
+
+    /**
+     * @param array $data
+     *
+     * @return SignatureCredentials
+     */
+    public function createSignatureCredentials(array $data)
+    {
+        $credentials = new AsymmetricCredentials();
+        $credentials->setMacId($data['mac_id']);
+        $credentials->setAlgorithm($data['mac_algorithm']);
+        $credentials->setPrivateKey($data['mac_key']);
+        return $credentials;
+    }
+
 
 }
