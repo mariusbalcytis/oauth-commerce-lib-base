@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "52de3be8e4a286c5c114ed07c479bafb",
+    "hash": "2ab92bf2a4cb83b7ef7a2c67753a44d1",
     "packages": [
         {
             "name": "guzzle/guzzle",
-            "version": "v3.4.0",
+            "version": "v3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "v3.4.0"
+                "reference": "v3.4.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.4.0",
-                "reference": "v3.4.0",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.4.2",
+                "reference": "v3.4.2",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -97,7 +97,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-04-12 05:58:15"
+            "time": "2013-04-29 23:55:30"
         },
         {
             "name": "phpseclib/phpseclib",

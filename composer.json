@@ -21,7 +21,7 @@
         }
     ],
     "require": {
-        "guzzle/guzzle": "v3.4.0",
+        "guzzle/guzzle": "v3.4.2",
         "phpseclib/phpseclib": "0.3.1",
         "zendframework/zend-crypt": "2.1.4",
         "zendframework/zend-math": "2.1.4"
