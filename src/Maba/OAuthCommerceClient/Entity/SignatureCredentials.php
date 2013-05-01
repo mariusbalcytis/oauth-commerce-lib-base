@@ -4,17 +4,12 @@
 namespace Maba\OAuthCommerceClient\Entity;
 
 
-class SignatureCredentials
+abstract class SignatureCredentials
 {
     /**
      * @var string
      */
     protected $macId;
-
-    /**
-     * @var string
-     */
-    protected $macKey;
 
     /**
      * @var string
@@ -59,26 +54,6 @@ class SignatureCredentials
     public function getMacId()
     {
         return $this->macId;
-    }
-
-    /**
-     * @param string $macKey
-     *
-     * @return $this
-     */
-    public function setMacKey($macKey)
-    {
-        $this->macKey = $macKey;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMacKey()
-    {
-        return $this->macKey;
     }
 
 

@@ -4,9 +4,9 @@
 namespace Maba\OAuthCommerceClient\Entity;
 
 use Guzzle\Service\Command\OperationCommand;
-use Guzzle\Service\Command\ResponseClassInterface;
+use Maba\OAuthCommerceClient\Entity\SignatureCredentials\SymmetricCredentials;
 
-class AccessToken extends SignatureCredentials implements ResponseClassInterface
+class AccessToken extends SymmetricCredentials
 {
     const TOKEN_TYPE = 'urn:marius-balcytis:oauth:token-type:mac-extended';
 
@@ -19,19 +19,6 @@ class AccessToken extends SignatureCredentials implements ResponseClassInterface
      * @var string
      */
     protected $refreshToken;
-
-
-    /**
-     * Create a response model object from a completed command
-     *
-     * @param OperationCommand $command That serialized the request
-     *
-     * @return static
-     */
-    public static function fromCommand(OperationCommand $command)
-    {
-        return static::fromArray($command->getResponse()->json());
-    }
 
     /**
      * @param $data
@@ -47,7 +34,7 @@ class AccessToken extends SignatureCredentials implements ResponseClassInterface
         /** @var $token AccessToken */
         $token = new static();
         $token->macId = $data['access_token'];
-        $token->macKey = $data['mac_key'];
+        $token->sharedKey = $data['mac_key'];
         $token->algorithm = $data['mac_algorithm'];
         if (isset($data['refresh_token'])) {
             $token->refreshToken = $data['refresh_token'];
@@ -69,7 +56,7 @@ class AccessToken extends SignatureCredentials implements ResponseClassInterface
             'access_token' => $this->getMacId(),
             'token_type' => self::TOKEN_TYPE,
             'mac_algorithm' => $this->getAlgorithm(),
-            'mac_key' => $this->getMacKey(),
+            'mac_key' => $this->getSharedKey(),
         );
         if ($this->expiresAt !== null) {
             $data['expires_at'] = $this->expiresAt->getTimestamp();

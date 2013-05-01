@@ -71,6 +71,16 @@ class AlgorithmManager
     }
 
     /**
+     * @param array $data
+     *
+     * @return SignatureCredentials
+     */
+    public function createSignatureCredentials(array $data)
+    {
+        return $this->registry->getSignatureAlgorithm($data['mac_algorithm'])->createSignatureCredentials($data);
+    }
+
+    /**
      * @param SignatureCredentials $signatureCredentials
      *
      * @return SignatureAlgorithmInterface
