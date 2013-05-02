@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Maba\OAuthCommerceInternalClient\Normalizer;
+namespace Maba\OAuthCommerceClient\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

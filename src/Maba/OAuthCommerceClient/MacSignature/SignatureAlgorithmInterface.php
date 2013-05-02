@@ -31,4 +31,12 @@ interface SignatureAlgorithmInterface
      * @return SignatureCredentials
      */
     public function createSignatureCredentials(array $data);
+
+    /**
+     * @param SignatureCredentials $credentials
+     *
+     * @throws \InvalidArgumentException
+     * @return array
+     */
+    public function normalizeSignatureCredentials(SignatureCredentials $credentials);
 }

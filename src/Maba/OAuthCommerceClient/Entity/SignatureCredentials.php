@@ -16,6 +16,12 @@ abstract class SignatureCredentials
      */
     protected $algorithm;
 
+
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param string $algorithm
      *

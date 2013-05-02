@@ -140,18 +140,18 @@ class ContainerExtension implements ExtensionInterface
                 '%maba_oauth_commerce.guzzle_client.config%',
             ))
             ->addMethodCall('addSubscriber', array(new Reference('maba_oauth_commerce.mac_signature_provider')))
+            ->addMethodCall('addSubscriber', array(new Definition('Maba\OAuthCommerceClient\Plugin\ErrorProvider')))
         ;
 
         $container->register(
             'maba_oauth_commerce.chain_normalizer',
-            'Maba\OAuthCommerceInternalClient\Normalizer\ChainNormalizer'
-        );
+            'Maba\OAuthCommerceClient\Normalizer\ChainNormalizer'
+        )->addMethodCall('addNormalizer', array(new Definition('Maba\OAuthCommerceClient\Normalizer\ArrayNormalizer')));
 
         $container
             ->register('maba_oauth_commerce.serializer', 'Symfony\Component\Serializer\Serializer')
             ->setArguments(array(
                 array(
-                    new Definition('Maba\OAuthCommerceClient\Normalizer\ArrayNormalizer'),
                     new Reference('maba_oauth_commerce.chain_normalizer'),
                     new Definition('Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer'),
                 ),
@@ -171,7 +171,10 @@ class ContainerExtension implements ExtensionInterface
             ))
             ->setAbstract(true)
         ;
+    }
 
+    public function addCompilerPasses(ContainerBuilder $container)
+    {
         $container->addCompilerPass(new AddTaggedCompilerPass(
             'maba_oauth_commerce.chain_normalizer',
             'maba_oauth_commerce.normalizer',

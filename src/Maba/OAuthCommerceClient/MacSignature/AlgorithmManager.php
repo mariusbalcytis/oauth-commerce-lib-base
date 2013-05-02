@@ -81,6 +81,16 @@ class AlgorithmManager
     }
 
     /**
+     * @param SignatureCredentials $credentials
+     *
+     * @return array
+     */
+    public function normalizeSignatureCredentials(SignatureCredentials $credentials)
+    {
+        return $this->getAlgorithmForCredentials($credentials)->normalizeSignatureCredentials($credentials);
+    }
+
+    /**
      * @param SignatureCredentials $signatureCredentials
      *
      * @return SignatureAlgorithmInterface

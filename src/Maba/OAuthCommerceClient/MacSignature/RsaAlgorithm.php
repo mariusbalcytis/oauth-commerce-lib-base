@@ -81,7 +81,25 @@ class RsaAlgorithm implements SignatureAlgorithmInterface
         $credentials->setMacId($data['mac_id']);
         $credentials->setAlgorithm($data['mac_algorithm']);
         $credentials->setPrivateKey($data['mac_key']);
+        $credentials->setPublicKey($data['public_key']);
         return $credentials;
+    }
+    /**
+     * @param SignatureCredentials $credentials
+     *
+     * @throws \InvalidArgumentException
+     * @return array
+     */
+    public function normalizeSignatureCredentials(SignatureCredentials $credentials)
+    {
+        if (!$credentials instanceof AsymmetricCredentials) {
+            throw new \InvalidArgumentException('RsaAlgorithms works with asymmetric credentials');
+        }
+        return array(
+            'mac_id' => $credentials->getMacId(),
+            'mac_algorithm' => $credentials->getAlgorithm(),
+            'public_key' => $credentials->getPublicKey(),
+        );
     }
 
 

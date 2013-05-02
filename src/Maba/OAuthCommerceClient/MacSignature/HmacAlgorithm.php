@@ -73,4 +73,21 @@ class HmacAlgorithm implements SignatureAlgorithmInterface
         return $credentials;
     }
 
+    /**
+     * @param SignatureCredentials $credentials
+     *
+     * @throws \InvalidArgumentException
+     * @return array
+     */
+    public function normalizeSignatureCredentials(SignatureCredentials $credentials)
+    {
+        if (!$credentials instanceof SymmetricCredentials) {
+            throw new \InvalidArgumentException('HmacAlgorithms works with symmetric credentials');
+        }
+        return array(
+            'mac_id' => $credentials->getMacId(),
+            'mac_algorithm' => $credentials->getAlgorithm(),
+        );
+    }
+
 }

@@ -1,13 +1,9 @@
 <?php
 
 
-namespace Maba\OAuthCommerceInternalClient\Normalizer;
+namespace Maba\OAuthCommerceClient\Normalizer;
 
-use Maba\OAuthCommerceClient\MacSignature\AlgorithmManager;
-use Maba\OAuthCommerceInternalClient\Entity\ClientCredentials;
-use Symfony\Component\Serializer\Encoder\NormalizationAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
