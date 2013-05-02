@@ -6,6 +6,7 @@ namespace Maba\OAuthCommerceClient\Plugin;
 use Guzzle\Common\Event;
 use Guzzle\Common\Exception\RuntimeException;
 use Guzzle\Http\Message\Response;
+use Maba\OAuthCommerceClient\Exception\ClientErrorException;
 use Maba\OAuthCommerceClient\Exception\RequestException;
 use Maba\OAuthCommerceClient\Exception\ServerErrorException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -52,7 +53,7 @@ class ErrorProvider implements EventSubscriberInterface
         if (substr($statusCode, 0, 1) === '5') {
             $exception = ServerErrorException::create($message);
         } else {
-            $exception = RequestException::create($message);
+            $exception = ClientErrorException::create($message);
         }
 
         $exception

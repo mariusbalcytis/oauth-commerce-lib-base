@@ -39,6 +39,9 @@ class ChainNormalizer implements NormalizerInterface, DenormalizerInterface, Ser
         if ($normalizer instanceof DenormalizerInterface) {
             $this->denormalizers[] = $normalizer;
         }
+        if ($normalizer instanceof SerializerAwareInterface && $this->serializer) {
+            $normalizer->setSerializer($this->serializer);
+        }
         return $this;
     }
 
@@ -106,6 +109,17 @@ class ChainNormalizer implements NormalizerInterface, DenormalizerInterface, Ser
     public function setSerializer(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
+
+        foreach ($this->normalizers as $normalizer) {
+            if ($normalizer instanceof SerializerAwareInterface) {
+                $normalizer->setSerializer($serializer);
+            }
+        }
+        foreach ($this->denormalizers as $normalizer) {
+            if ($normalizer instanceof SerializerAwareInterface) {
+                $normalizer->setSerializer($serializer);
+            }
+        }
     }
 
     /**
