@@ -23,8 +23,8 @@
     "require": {
         "guzzle/guzzle": "3.4.*",
         "phpseclib/phpseclib": "0.3.1",
-        "zendframework/zend-crypt": "2.1.4",
-        "zendframework/zend-math": "2.1.4",
+        "zendframework/zend-crypt": "2.1.*",
+        "zendframework/zend-math": "2.1.*",
         "symfony/serializer": "2.2.*",
         "symfony/dependency-injection": "2.2.*"
     }
