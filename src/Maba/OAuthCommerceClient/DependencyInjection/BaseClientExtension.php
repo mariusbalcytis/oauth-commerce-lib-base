@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
-class ContainerExtension implements ExtensionInterface
+class BaseClientExtension implements ExtensionInterface
 {
     /**
      * Loads a specific configuration.
