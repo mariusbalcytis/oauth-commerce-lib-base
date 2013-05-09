@@ -5,7 +5,7 @@ namespace Maba\OAuthCommerceClient;
 
 use Guzzle\Service\Client;
 use Guzzle\Service\Command\CommandInterface;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class BaseClient
 {
@@ -16,12 +16,12 @@ abstract class BaseClient
     protected $client;
 
     /**
-     * @var \Symfony\Component\Serializer\Serializer
+     * @var \Symfony\Component\Serializer\SerializerInterface
      */
     protected $serializer;
 
 
-    public function __construct(Client $client, Serializer $serializer)
+    public function __construct(Client $client, SerializerInterface $serializer)
     {
         $this->client = $client;
         $this->serializer = $serializer;

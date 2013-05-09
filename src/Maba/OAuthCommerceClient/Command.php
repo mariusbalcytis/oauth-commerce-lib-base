@@ -7,7 +7,7 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Common\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Maba\OAuthCommerceClient\Normalizer\PlainNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class Command extends AbstractCommand
@@ -21,7 +21,7 @@ class Command extends AbstractCommand
     const CONTENT_TYPE_URL_ENCODED = 'application/x-www-form-urlencoded';
 
     /**
-     * @var SerializerInterface|DecoderInterface
+     * @var SerializerInterface
      */
     protected $serializer;
 
@@ -75,7 +75,7 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param object $bodyEntity
+     * @param mixed  $bodyEntity
      * @param string $requestFormat
      *
      * @return $this
@@ -138,7 +138,7 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param SerializerInterface|DecoderInterface $serializer
+     * @param SerializerInterface $serializer
      *
      * @return $this
      */
@@ -180,15 +180,11 @@ class Command extends AbstractCommand
             } else {
                 $format = 'json';
             }
-            if ($this->responseClass !== null) {
-                $this->result = $this->serializer->deserialize(
-                    (string)$response->getBody(),
-                    $this->responseClass,
-                    $format
-                );
-            } else {
-                $this->result = $this->serializer->decode((string)$response->getBody(), $format);
-            }
+            $this->result = $this->serializer->deserialize(
+                (string)$response->getBody(),
+                $this->responseClass !== null ? $this->responseClass : PlainNormalizer::TYPE,
+                $format
+            );
         }
     }
 

@@ -67,7 +67,7 @@ class HmacAlgorithm implements SignatureAlgorithmInterface
     public function createSignatureCredentials(array $data)
     {
         $credentials = new SymmetricCredentials();
-        $credentials->setMacId($data['mac_id']);
+        $credentials->setMacId($data['access_token']);
         $credentials->setAlgorithm($data['mac_algorithm']);
         $credentials->setSharedKey($data['mac_key']);
         return $credentials;
@@ -85,7 +85,7 @@ class HmacAlgorithm implements SignatureAlgorithmInterface
             throw new \InvalidArgumentException('HmacAlgorithms works with symmetric credentials');
         }
         return array(
-            'mac_id' => $credentials->getMacId(),
+            'access_token' => $credentials->getMacId(),
             'mac_algorithm' => $credentials->getAlgorithm(),
         );
     }

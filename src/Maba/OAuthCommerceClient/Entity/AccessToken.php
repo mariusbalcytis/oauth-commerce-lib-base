@@ -6,7 +6,7 @@ namespace Maba\OAuthCommerceClient\Entity;
 use Guzzle\Service\Command\OperationCommand;
 use Maba\OAuthCommerceClient\Entity\SignatureCredentials\SymmetricCredentials;
 
-class AccessToken extends SymmetricCredentials
+class AccessToken
 {
     const TOKEN_TYPE = 'urn:marius-balcytis:oauth:token-type:mac-extended';
 
@@ -21,50 +21,19 @@ class AccessToken extends SymmetricCredentials
     protected $refreshToken;
 
     /**
-     * @param $data
-     *
-     * @throws \RuntimeException
-     * @return static
+     * @var string[]
      */
-    public static function fromArray($data)
-    {
-        if ($data['token_type'] !== self::TOKEN_TYPE) {
-            throw new \RuntimeException('Unsupported token_type parameter');
-        }
-        /** @var $token AccessToken */
-        $token = new static();
-        $token->macId = $data['access_token'];
-        $token->sharedKey = $data['mac_key'];
-        $token->algorithm = $data['mac_algorithm'];
-        if (isset($data['refresh_token'])) {
-            $token->refreshToken = $data['refresh_token'];
-        }
-        if (isset($data['expires_in'])) {
-            $token->expiresAt = new \DateTime('@' . (time() + (int) $data['expires_in']));
-        } elseif (isset($data['expires_at'])) {
-            $token->expiresAt = new \DateTime('@' . (int) $data['expires_at']);
-        }
-        return $token;
-    }
+    protected $scopes = array();
 
     /**
-     * @return array
+     * @var \Maba\OAuthCommerceClient\Entity\SignatureCredentials
      */
-    public function toArray()
+    protected $signatureCredentials;
+
+
+    public static function create()
     {
-        $data = array(
-            'access_token' => $this->getMacId(),
-            'token_type' => self::TOKEN_TYPE,
-            'mac_algorithm' => $this->getAlgorithm(),
-            'mac_key' => $this->getSharedKey(),
-        );
-        if ($this->expiresAt !== null) {
-            $data['expires_at'] = $this->expiresAt->getTimestamp();
-        }
-        if ($this->refreshToken !== null) {
-            $data['refresh_token'] = $this->refreshToken;
-        }
-        return $data;
+        return new static();
     }
 
     /**
@@ -114,5 +83,57 @@ class AccessToken extends SymmetricCredentials
     {
         return $this->refreshToken;
     }
+
+    /**
+     * @param string[] $scopes
+     *
+     * @return $this
+     */
+    public function setScopes($scopes)
+    {
+        $this->scopes = $scopes;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
+    }
+
+    /**
+     * @param string $scope
+     *
+     * @return bool
+     */
+    public function hasScope($scope)
+    {
+        return in_array($scope, $this->scopes);
+    }
+
+    /**
+     * @param \Maba\OAuthCommerceClient\Entity\SignatureCredentials $signatureCredentials
+     *
+     * @return $this
+     */
+    public function setSignatureCredentials($signatureCredentials)
+    {
+        $this->signatureCredentials = $signatureCredentials;
+
+        return $this;
+    }
+
+    /**
+     * @return \Maba\OAuthCommerceClient\Entity\SignatureCredentials
+     */
+    public function getSignatureCredentials()
+    {
+        return $this->signatureCredentials;
+    }
+
+
 
 }

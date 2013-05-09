@@ -6,6 +6,7 @@ namespace Maba\OAuthCommerceClient\DependencyInjection;
 use Maba\OAuthCommerceClient\MacSignature\RsaAlgorithm;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
@@ -23,9 +24,8 @@ class BaseClientExtension implements ExtensionInterface
      */
     public function load(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('maba_oauth_commerce.signature_credentials', array());
-        $container->setParameter('maba_oauth_commerce.guzzle_client.base_url', null);
-        $container->setParameter('maba_oauth_commerce.guzzle_client.config', null);
+        $container->setParameter('maba_oauth_commerce.auth_client.default_base_url', null);
+        $container->setParameter('maba_oauth_commerce.guzzle_client.default_config', array());
 
         $container->register('maba_oauth_commerce.registry', 'Maba\OAuthCommerceClient\Registry');
 
@@ -112,41 +112,15 @@ class BaseClientExtension implements ExtensionInterface
             )
             ->setArguments(array(new Reference('maba_oauth_commerce.registry')))
         ;
-        $container
-            ->register(
-                'maba_oauth_commerce.mac_signature_provider',
-                'Maba\OAuthCommerceClient\Plugin\MacSignatureProvider'
-            )
-            ->setArguments(array(
-                new Reference('maba_oauth_commerce.signature_credentials'),
-                new Reference('maba_oauth_commerce.algorithm_manager'),
-            ))
-        ;
-        $container
-            ->register(
-                'maba_oauth_commerce.signature_credentials',
-                'Maba\OAuthCommerceClient\Entity\SignatureCredentials'
-            )
-            ->setFactoryService('maba_oauth_commerce.algorithm_manager')
-            ->setFactoryMethod('createSignatureCredentials')
-            ->setArguments(array('%maba_oauth_commerce.signature_credentials%'))
-            ->setPublic(false)
-        ;
 
-        $container
-            ->register('maba_oauth_commerce.guzzle_client', 'Guzzle\Service\Client')
-            ->setArguments(array(
-                '%maba_oauth_commerce.guzzle_client.base_url%',
-                '%maba_oauth_commerce.guzzle_client.config%',
-            ))
-            ->addMethodCall('addSubscriber', array(new Reference('maba_oauth_commerce.mac_signature_provider')))
-            ->addMethodCall('addSubscriber', array(new Definition('Maba\OAuthCommerceClient\Plugin\ErrorProvider')))
-        ;
 
         $container->register(
             'maba_oauth_commerce.chain_normalizer',
             'Maba\OAuthCommerceClient\Normalizer\ChainNormalizer'
-        )->addMethodCall('addNormalizer', array(new Definition('Maba\OAuthCommerceClient\Normalizer\ArrayNormalizer')));
+        )->addMethodCall(
+            'addNormalizer',
+            array(new Definition('Maba\OAuthCommerceClient\Normalizer\ArrayNormalizer'))
+        );
 
         $container
             ->register('maba_oauth_commerce.serializer', 'Symfony\Component\Serializer\Serializer')
@@ -164,12 +138,57 @@ class BaseClientExtension implements ExtensionInterface
         ;
 
         $container
-            ->register('maba_oauth_commerce.base_client', 'Maba\OAuthCommerceClient\BaseClient')
+            ->register(
+                'maba_oauth_commerce.normalizer.plain',
+                'Maba\OAuthCommerceClient\Normalizer\PlainNormalizer'
+            )
+            ->addTag('maba_oauth_commerce.normalizer')
+            ->setPublic(false)
+        ;
+        $container
+            ->register(
+                'maba_oauth_commerce.normalizer.date_time',
+                'Maba\OAuthCommerceClient\Normalizer\DateTimeNormalizer'
+            )
+            ->addTag('maba_oauth_commerce.normalizer')
+            ->setPublic(false)
+        ;
+        $container
+            ->register(
+                'maba_oauth_commerce.normalizer.access_token',
+                'Maba\OAuthCommerceClient\Normalizer\AccessTokenNormalizer'
+            )
+            ->setArguments(array(new Reference('maba_oauth_commerce.algorithm_manager')))
+            ->addTag('maba_oauth_commerce.normalizer')
+            ->setPublic(false)
+        ;
+        $container
+            ->register(
+                'maba_oauth_commerce.normalizer.signature_credentials',
+                'Maba\OAuthCommerceClient\Normalizer\SignatureCredentialsNormalizer'
+            )
+            ->setArguments(array(new Reference('maba_oauth_commerce.algorithm_manager')))
+            ->addTag('maba_oauth_commerce.normalizer')
+            ->setPublic(false)
+        ;
+
+        $container->register('maba_oauth_commerce.factory.base', 'Maba\OAuthCommerceClient\BaseClientFactory')
             ->setArguments(array(
-                new Reference('maba_oauth_commerce.guzzle_client'),
+                new Reference('maba_oauth_commerce.algorithm_manager'),
                 new Reference('maba_oauth_commerce.serializer'),
+                new Definition('Maba\OAuthCommerceClient\Plugin\ErrorProvider'),
             ))
+            ->addMethodCall('setDefaultConfig', array('%maba_oauth_commerce.guzzle_client.default_config%'))
             ->setAbstract(true)
+        ;
+
+        $container
+            ->setDefinition(
+                'maba_oauth_commerce.factory.auth',
+                new DefinitionDecorator('maba_oauth_commerce.factory.base')
+            )
+            ->addMethodCall('setDefaultBaseUrl', array('%maba_oauth_commerce.auth_client.default_base_url%'))
+            ->setClass('Maba\OAuthCommerceClient\AuthClientFactory')
         ;
     }
 
