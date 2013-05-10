@@ -21,6 +21,11 @@ class Certificate
      */
     protected $hash;
 
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param string $hash
      *

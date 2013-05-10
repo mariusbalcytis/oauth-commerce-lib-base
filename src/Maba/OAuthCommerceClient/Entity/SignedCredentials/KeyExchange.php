@@ -16,6 +16,11 @@ class KeyExchange
      */
     protected $parameters;
 
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param array $parameters
      *

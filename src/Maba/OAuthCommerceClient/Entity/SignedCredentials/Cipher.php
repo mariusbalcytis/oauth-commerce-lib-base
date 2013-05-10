@@ -16,6 +16,11 @@ class Cipher
      */
     protected $iv;
 
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param string $iv
      *

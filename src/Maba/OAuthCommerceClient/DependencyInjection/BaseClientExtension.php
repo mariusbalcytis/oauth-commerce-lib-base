@@ -171,6 +171,14 @@ class BaseClientExtension implements ExtensionInterface
             ->addTag('maba_oauth_commerce.normalizer')
             ->setPublic(false)
         ;
+        $container
+            ->register(
+                'maba_oauth_commerce.normalizer.signature_credentials_session',
+                'Maba\OAuthCommerceClient\Normalizer\SignedCredentialsSessionNormalizer'
+            )
+            ->addTag('maba_oauth_commerce.normalizer')
+            ->setPublic(false)
+        ;
 
         $container->register('maba_oauth_commerce.factory.base', 'Maba\OAuthCommerceClient\BaseClientFactory')
             ->setArguments(array(

@@ -28,6 +28,11 @@ class Session
      */
     protected $sessionId;
 
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param \Maba\OAuthCommerceClient\Entity\SignedCredentials\Certificate $certificate
      *
