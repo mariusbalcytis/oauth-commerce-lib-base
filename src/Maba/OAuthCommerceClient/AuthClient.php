@@ -7,35 +7,54 @@ use Guzzle\Service\Client;
 use Maba\OAuthCommerceClient\Entity\SignedCredentials\Session;
 use Maba\OAuthCommerceClient\Entity\UserCredentials\CredentialsInterface;
 use Maba\OAuthCommerceClient\Exception\InvalidHashException;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class AuthClient
  */
 class AuthClient extends BaseClient
 {
+    /**
+     * @var Registry
+     */
+    protected $registry;
 
+    public function __construct(Client $client, SerializerInterface $serializer, Registry $registry)
+    {
+        parent::__construct($client, $serializer);
+        $this->registry = $registry;
+    }
+    /**
+     * @param CredentialsInterface $credentials
+     * @param string[]             $scopes
+     *
+     * @return Command<AccessToken>
+     */
     public function createSecretCredentialsToken(CredentialsInterface $credentials, array $scopes = array())
     {
         /** @var Command $createSession */
         $createSession = $this->createCommand()
-            ->setRequest($this->client->post('encrypted-credentials/session'))
+            ->setRequest($this->client->post('encrypted/session'))
             ->setBodyEntity($credentials->toPublicArray(), 'urlencoded')
             ->setResponseClass('Maba\OAuthCommerceClient\Entity\SignedCredentials\Session')
         ;
 
+        $registry = $this->registry;
+
         $httpClient = $this->client;
         return $this->createCommand()
-            ->setBeforeExecute(function(Command $command) use ($createSession, $credentials, $scopes, $httpClient) {
+            ->setBeforeExecute(function(Command $command) use ($createSession, $credentials, $scopes, $httpClient, $registry) {
                 /** @var Session $session */
                 $session = $createSession->getResult();
 
-                /** @var Registry $registry */
-                $registry = null;
                 $keyExchange = $registry->getKeyExchange($session->getKeyExchange()->getType());
                 $encrypting = $registry->getEncrypting($session->getCipher()->getType());
                 $hasher = $registry->getHasher($session->getCertificate()->getHashType());
 
-                $serverCertificate = (string)$httpClient->get($session->getCertificate()->getUrl())->getResponseBody();
+                $serverCertificate = $httpClient->get($session->getCertificate()->getUrl())
+                    ->send()
+                    ->getBody(true)
+                ;
 
                 $hash = $hasher->hash($serverCertificate);
                 if ($session->getCertificate()->getHash() !== $hash) {
@@ -54,7 +73,7 @@ class AuthClient extends BaseClient
                     $encrypting->getKeyLength()
                 );
                 $encoded = http_build_query($credentials->toPrivateArray(), null, '&');
-                $encrypted = $encrypting->encrypt($encoded, $session->getCipher()->getIv(), $commonKey);
+                $encrypted = $encrypting->encrypt($encoded, base64_decode($session->getCipher()->getIv()), $commonKey);
 
                 $command->setBodyEntity(array(
                     'grant_type' => 'urn:marius-balcytis:oauth:grant-type:encrypted-credentials',
@@ -63,7 +82,7 @@ class AuthClient extends BaseClient
                     'encrypted_credentials' => $encrypted,
                 ) + $additionalParameters->getAll(), 'urlencoded');
             })
-            ->setRequest($this->client->post('secret-credentials/token'))
+            ->setRequest($this->client->post('encrypted/token'))
             ->setResponseClass('Maba\OAuthCommerceClient\Entity\AccessToken')
         ;
     }

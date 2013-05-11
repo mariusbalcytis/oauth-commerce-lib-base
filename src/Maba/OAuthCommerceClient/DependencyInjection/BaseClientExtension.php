@@ -87,6 +87,14 @@ class BaseClientExtension implements ExtensionInterface
         ;
         $container
             ->register(
+                'maba_oauth_commerce.key_exchange.dh_group2',
+                'Maba\OAuthCommerceClient\KeyExchange\DiffieHellman\Group2KeyExchange'
+            )
+            ->addTag('maba_oauth_commerce.key_exchange')
+            ->setPublic(false)
+        ;
+        $container
+            ->register(
                 'maba_oauth_commerce.encrypting.aes-128-cbc',
                 'Maba\OAuthCommerceClient\SymmetricEncrypting\Encrypting'
             )
@@ -196,6 +204,7 @@ class BaseClientExtension implements ExtensionInterface
                 new DefinitionDecorator('maba_oauth_commerce.factory.base')
             )
             ->addMethodCall('setDefaultBaseUrl', array('%maba_oauth_commerce.auth_client.default_base_url%'))
+            ->addMethodCall('setRegistry', array(new Reference('maba_oauth_commerce.registry')))
             ->setClass('Maba\OAuthCommerceClient\AuthClientFactory')
         ;
     }

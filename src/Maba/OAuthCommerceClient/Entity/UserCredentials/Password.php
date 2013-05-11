@@ -23,6 +23,12 @@ class Password implements CredentialsInterface
      */
     protected $password;
 
+
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param string $password
      *

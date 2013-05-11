@@ -38,7 +38,9 @@ abstract class BaseKeyExchange implements KeyExchangeInterface
 
         $clientPublicKey = $diffieHellman->getPublicKey(DiffieHellman::FORMAT_BINARY);
 
-        openssl_public_encrypt($clientPublicKey, $encryptedPublicKey, $serverCertificate, OPENSSL_PKCS1_PADDING);
+        if (!openssl_public_encrypt($clientPublicKey, $encryptedPublicKey, $serverCertificate, OPENSSL_PKCS1_PADDING)) {
+            throw new \RuntimeException('Cannot encrypt with public key: ' . openssl_error_string());
+        }
         $additionalParameters->add('encrypted_public_key', base64_encode($encryptedPublicKey));
 
         return substr(hash('sha256', $secretKey, true), 0, $sharedKeyLength);

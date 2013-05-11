@@ -6,8 +6,11 @@ namespace Maba\OAuthCommerceClient;
 use Guzzle\Service\Client;
 use Maba\OAuthCommerceClient\Entity\SignatureCredentials;
 use Maba\OAuthCommerceClient\MacSignature\AlgorithmManager;
+use Maba\OAuthCommerceClient\MacSignature\TokenExtensionProvider;
 use Maba\OAuthCommerceClient\Plugin\ErrorProvider;
 use Maba\OAuthCommerceClient\Plugin\MacSignatureProvider;
+use Maba\OAuthCommerceClient\Random\DefaultRandomProvider;
+use Maba\OAuthCommerceClient\Time\DefaultTimeProvider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -86,7 +89,13 @@ abstract class BaseClientFactory
             $signatureCredentials = $this->algorithmManager->createSignatureCredentials($signatureCredentials);
         }
 
-        $signatureProvider = new MacSignatureProvider($signatureCredentials, $this->algorithmManager);
+        $signatureProvider = new MacSignatureProvider(
+            $signatureCredentials,
+            $this->algorithmManager,
+            new TokenExtensionProvider($this->algorithmManager),
+            new DefaultRandomProvider(),
+            new DefaultTimeProvider()
+        );
         $guzzleClient = new Client($baseUrl ?: $this->defaultBaseUrl, $config + (array)$this->defaultConfig);
         $guzzleClient->addSubscriber($signatureProvider)->addSubscriber($this->errorProvider);
 

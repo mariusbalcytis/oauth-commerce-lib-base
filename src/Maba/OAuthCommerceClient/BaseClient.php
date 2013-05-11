@@ -5,6 +5,7 @@ namespace Maba\OAuthCommerceClient;
 
 use Guzzle\Service\Client;
 use Guzzle\Service\Command\CommandInterface;
+use Maba\OAuthCommerceClient\Entity\AccessToken;
 use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class BaseClient

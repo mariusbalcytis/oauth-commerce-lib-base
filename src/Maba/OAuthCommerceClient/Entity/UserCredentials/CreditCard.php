@@ -43,6 +43,12 @@ class CreditCard implements CredentialsInterface
      */
     protected $securityCode;
 
+
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param string $cardType
      *

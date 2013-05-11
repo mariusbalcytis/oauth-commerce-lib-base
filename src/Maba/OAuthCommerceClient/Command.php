@@ -7,6 +7,7 @@ use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\Command\AbstractCommand;
 use Guzzle\Common\Exception\InvalidArgumentException;
+use Maba\OAuthCommerceClient\Entity\AccessToken;
 use Maba\OAuthCommerceClient\Normalizer\PlainNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -54,6 +55,11 @@ class Command extends AbstractCommand
      * @var RequestInterface
      */
     protected $pendingRequest;
+
+    /**
+     * @var AccessToken
+     */
+    protected $accessToken;
 
 
     public static function create($parameters = null)
@@ -150,6 +156,18 @@ class Command extends AbstractCommand
     }
 
     /**
+     * @param \Maba\OAuthCommerceClient\Entity\AccessToken $accessToken
+     *
+     * @return $this
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
      * @param callable $callable
      *
      * @return $this
@@ -207,6 +225,9 @@ class Command extends AbstractCommand
                     'Request must implement EntityEnclosingRequestInterface when command has body'
                 );
             }
+        }
+        if ($this->accessToken !== null) {
+            $this->pendingRequest->getParams()->set('oauth_commerce.token', $this->accessToken);
         }
         $this->request = $this->pendingRequest;
     }

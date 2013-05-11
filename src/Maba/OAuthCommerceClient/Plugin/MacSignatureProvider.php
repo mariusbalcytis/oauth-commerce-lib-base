@@ -7,17 +7,13 @@ use Guzzle\Http\Message\Request;
 use Maba\OAuthCommerceClient\Entity\SignatureCredentials;
 use Maba\OAuthCommerceClient\MacSignature\AlgorithmManager;
 use Maba\OAuthCommerceClient\MacSignature\ExtensionProviderInterface;
-use Maba\OAuthCommerceClient\MacSignature\TokenExtensionProvider;
-use Maba\OAuthCommerceClient\Random\DefaultRandomProvider;
 use Maba\OAuthCommerceClient\Random\RandomProviderInterface;
-use Maba\OAuthCommerceClient\Time\DefaultTimeProvider;
 use Maba\OAuthCommerceClient\Time\TimeProviderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MacSignatureProvider implements EventSubscriberInterface
 {
     const DEFAULT_NONCE_LENGTH = 16;
-
     /**
      * @var array available character ranges for header values.
      * From http://tools.ietf.org/html/draft-ietf-oauth-v2-http-mac-02#section-3.1
@@ -27,48 +23,60 @@ class MacSignatureProvider implements EventSubscriberInterface
         array('from' => 0x23, 'to' => 0x5b),
         array('from' => 0x5d, 'to' => 0x7e),
     );
-
     /**
      * @var SignatureCredentials
      */
     protected $signatureCredentials;
-
     /**
      * @var TimeProviderInterface
      */
     protected $timeProvider;
-
     /**
      * @var RandomProviderInterface
      */
     protected $randomProvider;
-
     /**
      * @var integer
      */
     protected $nonceLength = self::DEFAULT_NONCE_LENGTH;
-
     /**
      * @var ExtensionProviderInterface
      */
     protected $extensionProvider;
-
     /**
      * @var AlgorithmManager
      */
     protected $algorithmManager;
 
     /**
-     * @param SignatureCredentials $signatureCredentials
-     * @param AlgorithmManager     $algorithmManager
+     * @param SignatureCredentials                                              $signatureCredentials
+     * @param AlgorithmManager                                                  $algorithmManager
+     * @param \Maba\OAuthCommerceClient\MacSignature\ExtensionProviderInterface $extensionProvider
+     * @param \Maba\OAuthCommerceClient\Random\RandomProviderInterface          $randomProvider
+     * @param \Maba\OAuthCommerceClient\Time\TimeProviderInterface              $timeProvider
      */
-    public function __construct(SignatureCredentials $signatureCredentials, AlgorithmManager $algorithmManager)
-    {
+    public function __construct(
+        SignatureCredentials $signatureCredentials,
+        AlgorithmManager $algorithmManager,
+        ExtensionProviderInterface $extensionProvider,
+        RandomProviderInterface $randomProvider,
+        TimeProviderInterface $timeProvider
+    ) {
         $this->signatureCredentials = $signatureCredentials;
         $this->algorithmManager = $algorithmManager;
-        $this->timeProvider = new DefaultTimeProvider();
-        $this->randomProvider = new DefaultRandomProvider();
-        $this->extensionProvider = new TokenExtensionProvider($algorithmManager);
+        $this->extensionProvider = $extensionProvider;
+        $this->randomProvider = $randomProvider;
+        $this->timeProvider = $timeProvider;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'request.before_send' => 'onBeforeSend'
+        );
     }
 
     /**
@@ -117,16 +125,6 @@ class MacSignatureProvider implements EventSubscriberInterface
         $this->timeProvider = $timeProvider;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'request.before_send' => 'onBeforeSend'
-        );
     }
 
     /**
