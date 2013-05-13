@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1be0ea9d291847870769817f401f04dc",
+    "hash": "a9d75208edd8af2c1488edea4ae2d825",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "cb8439f1ca209f764057d0e9c3f015333907a0f0"
+                "reference": "f7ec7f788e635572679592c1897d09d41fc7a4dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/cb8439f1ca209f764057d0e9c3f015333907a0f0",
-                "reference": "cb8439f1ca209f764057d0e9c3f015333907a0f0",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f7ec7f788e635572679592c1897d09d41fc7a4dc",
+                "reference": "f7ec7f788e635572679592c1897d09d41fc7a4dc",
                 "shasum": ""
             },
             "require": {
@@ -54,8 +54,6 @@
                 "phpunit/phpunit": "3.7.*",
                 "psr/log": "1.0.*",
                 "symfony/class-loader": "*",
-                "zend/zend-cache1": "1.12",
-                "zend/zend-log1": "1.12",
                 "zendframework/zend-cache": "2.0.*",
                 "zendframework/zend-log": "2.0.*"
             },
@@ -97,73 +95,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-05-01 06:04:08"
-        },
-        {
-            "name": "phpseclib/phpseclib",
-            "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpseclib/phpseclib",
-                "reference": "0.3.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/phpseclib/phpseclib/archive/0.3.1.zip",
-                "reference": "0.3.1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.0"
-            },
-            "suggest": {
-                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
-                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations.",
-                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP >= 4.3.3."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Crypt": "phpseclib/",
-                    "File": "phpseclib/",
-                    "Math": "phpseclib/",
-                    "Net": "phpseclib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "phpseclib/"
-            ],
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Wigginton",
-                    "email": "terrafrost@php.net",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
-            "homepage": "http://phpseclib.sourceforge.net",
-            "keywords": [
-                "BigInteger",
-                "aes",
-                "asn.1",
-                "asn1",
-                "crypto",
-                "cryptography",
-                "encryption",
-                "rsa",
-                "security",
-                "sftp",
-                "signature",
-                "signing",
-                "ssh",
-                "x.509",
-                "x509"
-            ],
-            "time": "2012-11-20 03:10:22"
+            "time": "2013-05-11 04:25:44"
         },
         {
             "name": "symfony/dependency-injection",
@@ -172,12 +104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "e0dab3fc8ae19857067d322347c8209e14cbd8ba"
+                "reference": "a9a37e6c87ac9774669b10bf85a0774885823735"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/e0dab3fc8ae19857067d322347c8209e14cbd8ba",
-                "reference": "e0dab3fc8ae19857067d322347c8209e14cbd8ba",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/a9a37e6c87ac9774669b10bf85a0774885823735",
+                "reference": "a9a37e6c87ac9774669b10bf85a0774885823735",
                 "shasum": ""
             },
             "require": {
@@ -218,7 +150,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2013-04-20 18:42:11"
+            "time": "2013-05-06 08:37:50"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -227,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "2e1fce7bb3ea06d9e42756f1dd3edf966420c755"
+                "reference": "v2.3.0-BETA2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/2e1fce7bb3ea06d9e42756f1dd3edf966420c755",
-                "reference": "2e1fce7bb3ea06d9e42756f1dd3edf966420c755",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.3.0-BETA2",
+                "reference": "v2.3.0-BETA2",
                 "shasum": ""
             },
             "require": {
@@ -281,12 +213,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Serializer.git",
-                "reference": "v2.2.1"
+                "reference": "8cfdd4a18348dd61b676e74c609e6a5366e63165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Serializer/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/Serializer/zipball/8cfdd4a18348dd61b676e74c609e6a5366e63165",
+                "reference": "8cfdd4a18348dd61b676e74c609e6a5366e63165",
                 "shasum": ""
             },
             "require": {
@@ -319,94 +251,29 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-06 21:43:23"
+            "time": "2013-05-08 08:39:40"
         },
         {
-            "name": "zendframework/zendframework",
-            "version": "2.1.4",
+            "name": "zendframework/zend-crypt",
+            "version": "2.1.5",
+            "target-dir": "Zend/Crypt",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zf2.git",
-                "reference": "release-2.1.4"
+                "url": "https://github.com/zendframework/Component_ZendCrypt.git",
+                "reference": "release-2.1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-2.1.4-release-2.1.4-36f64f.zip",
-                "reference": "2.1.4",
-                "shasum": "92d0c2f2df9d0f2729fb19d94cb79a2084b3116d"
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-crypt-2.1.5-release-2.1.5-acb4f2.zip",
+                "reference": "2.1.5",
+                "shasum": "68c86436e3c9bfa315c99fe266a24a2a7a117eaf"
             },
             "require": {
-                "php": ">=5.3.3"
-            },
-            "replace": {
-                "zendframework/zend-authentication": "self.version",
-                "zendframework/zend-barcode": "self.version",
-                "zendframework/zend-cache": "self.version",
-                "zendframework/zend-captcha": "self.version",
-                "zendframework/zend-code": "self.version",
-                "zendframework/zend-config": "self.version",
-                "zendframework/zend-console": "self.version",
-                "zendframework/zend-crypt": "self.version",
-                "zendframework/zend-db": "self.version",
-                "zendframework/zend-debug": "self.version",
-                "zendframework/zend-di": "self.version",
-                "zendframework/zend-dom": "self.version",
-                "zendframework/zend-escaper": "self.version",
-                "zendframework/zend-eventmanager": "self.version",
-                "zendframework/zend-feed": "self.version",
-                "zendframework/zend-file": "self.version",
-                "zendframework/zend-filter": "self.version",
-                "zendframework/zend-form": "self.version",
-                "zendframework/zend-http": "self.version",
-                "zendframework/zend-i18n": "self.version",
-                "zendframework/zend-inputfilter": "self.version",
-                "zendframework/zend-json": "self.version",
-                "zendframework/zend-ldap": "self.version",
-                "zendframework/zend-loader": "self.version",
-                "zendframework/zend-log": "self.version",
-                "zendframework/zend-mail": "self.version",
+                "php": ">=5.3.3",
                 "zendframework/zend-math": "self.version",
-                "zendframework/zend-memory": "self.version",
-                "zendframework/zend-mime": "self.version",
-                "zendframework/zend-modulemanager": "self.version",
-                "zendframework/zend-mvc": "self.version",
-                "zendframework/zend-navigation": "self.version",
-                "zendframework/zend-paginator": "self.version",
-                "zendframework/zend-permissions-acl": "self.version",
-                "zendframework/zend-permissions-rbac": "self.version",
-                "zendframework/zend-progressbar": "self.version",
-                "zendframework/zend-serializer": "self.version",
-                "zendframework/zend-server": "self.version",
                 "zendframework/zend-servicemanager": "self.version",
-                "zendframework/zend-session": "self.version",
-                "zendframework/zend-soap": "self.version",
-                "zendframework/zend-stdlib": "self.version",
-                "zendframework/zend-tag": "self.version",
-                "zendframework/zend-test": "self.version",
-                "zendframework/zend-text": "self.version",
-                "zendframework/zend-uri": "self.version",
-                "zendframework/zend-validator": "self.version",
-                "zendframework/zend-version": "self.version",
-                "zendframework/zend-view": "self.version",
-                "zendframework/zend-xmlrpc": "self.version"
+                "zendframework/zend-stdlib": "self.version"
             },
-            "require-dev": {
-                "doctrine/common": ">=2.1",
-                "ircmaxell/random-lib": "dev-master",
-                "ircmaxell/security-lib": "dev-master",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "suggest": {
-                "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
-                "ext-intl": "ext/intl for i18n features",
-                "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
-                "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
-                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
-            },
-            "bin": [
-                "bin/classmap_generator.php"
-            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -416,24 +283,159 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Zend\\": "library/",
-                    "ZendTest\\": "tests/"
+                    "Zend\\Crypt\\": ""
                 }
             },
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": "Zend Framework 2",
-            "homepage": "http://framework.zend.com/",
+            "description": " ",
             "keywords": [
-                "framework",
+                "crypt",
                 "zf2"
             ],
             "support": {
-                "source": "https://github.com/zendframework/zf2/tree/release-2.1.4",
-                "issues": "https://github.com/zendframework/zf2/issues"
+                "source": "https://github.com/zendframework/Component_ZendCrypt/tree/release-2.1.4"
             },
-            "time": "2013-03-13 22:26:48"
+            "time": "2013-03-11 21:47:26"
+        },
+        {
+            "name": "zendframework/zend-math",
+            "version": "2.1.5",
+            "target-dir": "Zend/Math",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendMath.git",
+                "reference": "release-2.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-math-2.1.5-release-2.1.5-acb4f2.zip",
+                "reference": "2.1.5",
+                "shasum": "6f6e7e48b396390593779d391624111e767f39cd"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev",
+                    "dev-develop": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Math\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": " ",
+            "keywords": [
+                "math",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zendframework/Component_ZendMath/tree/develop"
+            },
+            "time": "2013-03-14 11:13:27"
+        },
+        {
+            "name": "zendframework/zend-servicemanager",
+            "version": "2.1.5",
+            "target-dir": "Zend/ServiceManager",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendServiceManager.git",
+                "reference": "release-2.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-servicemanager-2.1.5-release-2.1.5-acb4f2.zip",
+                "reference": "2.1.5",
+                "shasum": "adba3da7a2011af8544fde8bb8743d9bb51fb984"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "zendframework/zend-di": "Zend\\Di component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev",
+                    "dev-develop": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\ServiceManager\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": " ",
+            "keywords": [
+                "servicemanager",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zendframework/Component_ZendServiceManager/tree/release-2.1.5"
+            },
+            "time": "2013-04-17 11:42:28"
+        },
+        {
+            "name": "zendframework/zend-stdlib",
+            "version": "2.1.5",
+            "target-dir": "Zend/Stdlib",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendStdlib.git",
+                "reference": "release-2.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-stdlib-2.1.5-release-2.1.5-acb4f2.zip",
+                "reference": "2.1.5",
+                "shasum": "3f15c56a0bee96fbc32778715ae7d070541b906f"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "pecl-weakref": "Implementation of weak references for Stdlib\\CallbackHandler"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev",
+                    "dev-develop": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Stdlib\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": " ",
+            "keywords": [
+                "stdlib",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zendframework/Component_ZendStdlib/tree/release-2.1.5"
+            },
+            "time": "2013-04-15 11:43:47"
         }
     ],
     "packages-dev": [
@@ -446,9 +448,10 @@
     "stability-flags": [
 
     ],
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.3.3",
+        "ext-openssl": "*"
+    },
     "platform-dev": [
 
     ]

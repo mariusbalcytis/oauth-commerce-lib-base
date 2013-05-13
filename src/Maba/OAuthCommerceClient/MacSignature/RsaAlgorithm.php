@@ -81,7 +81,7 @@ class RsaAlgorithm implements SignatureAlgorithmInterface
         $credentials->setMacId($data['access_token']);
         $credentials->setAlgorithm($data['mac_algorithm']);
         $credentials->setPrivateKey($data['mac_key']);
-        $credentials->setPublicKey($data['public_key']);
+        $credentials->setPublicKey(isset($data['public_key']) ? $data['public_key'] : null);
         return $credentials;
     }
     /**
